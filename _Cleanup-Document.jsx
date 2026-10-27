@@ -4,7 +4,8 @@
 
     var steps = [
         "FindChange_MarkDown.jsx",
-        "FindRemoveEmptyTextFrames.jsx", // Removed redundant 2nd run
+        "FindRemoveEmptyTextFrames.jsx",
+        "MaskLayeredImages.jsx",
         "FixPageHeadersInnerOuter.jsx"
     ];
 
@@ -13,7 +14,6 @@
 
         if (scriptFile.exists) {
             try {
-                // Execute the child script
                 app.doScript(
                     scriptFile,
                     ScriptLanguage.JAVASCRIPT,
@@ -26,7 +26,7 @@
 
             } catch (e) {
                 alert("Execution error in: " + steps[i] + "\nLine: " + e.line + "\n" + e.message);
-                break; // Stop execution on actual failure to prevent cascading bugs
+                break;
             }
         } else {
             alert("Missing script file:\n" + scriptFile.fsName);

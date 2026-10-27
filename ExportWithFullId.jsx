@@ -48,13 +48,24 @@
             var frames = page.textFrames;
             for (var i = 0; i < frames.length; i++) {
                 if (frames[i].label === "fullId") {
-                    var txt = frames[i].contents.replace(/^\s+|\s+$/g, "");
+                    var raw = frames[i].contents;
+                    var txt = sanitizeFilename(raw);
                     if (txt.length > 0) return txt;
                 }
             }
         } catch (e) {}
         return null;
     }
+
+
+    function sanitizeFilename(str) {
+        if (!str) return "";
+        str = str.replace(/[\u200B\u200C\u200D\uFEFF\u00AD\u00A0]/g, "");
+        str = str.replace(/[^\x00-\x7F]/g, "");
+        str = str.replace(/\s+/g, "");
+        return str;
+    }
+
 
     function expandSuffix(suffix, info) {
         if (!suffix) return "";
